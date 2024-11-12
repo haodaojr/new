@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #ffffff;
+            padding: 20px;
+            position: fixed;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar .logo {
+            text-align: center;
+            color: #333;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .sidebar .nav-links {
+            list-style: none;
+        }
+
+        .sidebar .nav-links li {
+            margin: 20px 0;
+        }
+
+        .sidebar .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar .nav-links a:hover {
+            color: #007bff;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            background-color: #e9ecef;
+            flex-grow: 1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h2 {
+            color: #333;
+            font-size: 24px;
+        }
+
+        .tabs button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 15px;
+            margin-left: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .tabs button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card h3 {
+            color: #333;
+            font-size: 18px;
+        }
+
+        .card p {
+            font-size: 24px;
+            color: #007bff;
+            margin-top: 10px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Thư viện Chart.js -->
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h2>CREATIVE TIM</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Icons</a></li>
+            <li><a href="#">Maps</a></li>
+            <li><a href="#">Notifications</a></li>
+            <li><a href="#">User Profile</a></li>
+            <li><a href="#">Table List</a></li>
+            <li><a href="#">Typography</a></li>
+            <li><a href="#">RTL Support</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <header>
+            <h2>Performance</h2>
+            <div class="tabs">
+                <button>Accounts</button>
+                <button>Purchases</button>
+                <button>Sessions</button>
+            </div>
+        </header>
+        <div class="cards">
+            <div class="card">
+                <h3>Total Shipments</h3>
+                <p>763,215</p>
+                <canvas id="shipmentChart"></canvas>
+            </div>
+            <div class="card">
+                <h3>Daily Sales</h3>
+                <p>3,500€</p>
+                <canvas id="salesChart"></canvas>
+            </div>
+            <div class="card">
+                <h3>Completed Tasks</h3>
+                <p>12,100K</p>
+                <canvas id="tasksChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Biểu đồ Shipments
+            const shipmentCtx = document.getElementById('shipmentChart').getContext('2d');
+            new Chart(shipmentCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Total Shipments',
+                        data: [90, 80, 85, 70, 95, 100, 90, 85, 100, 110, 105, 90],
+                        borderColor: '#007bff',
+                        backgroundColor: 'transparent',
+                        pointBackgroundColor: '#007bff'
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+
+            // Biểu đồ Sales
+            const salesCtx = document.getElementById('salesChart').getContext('2d');
+            new Chart(salesCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Daily Sales',
+                        data: [50, 70, 60, 90, 100, 80, 75, 95, 85, 110, 120, 105],
+                        backgroundColor: '#1e90ff'
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+
+            // Biểu đồ Tasks
+            const tasksCtx = document.getElementById('tasksChart').getContext('2d');
+            new Chart(tasksCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Completed Tasks',
+                        data: [80, 90, 85, 75, 95, 85, 90, 100, 110, 120, 115, 100],
+                        borderColor: '#007bff',
+                        backgroundColor: 'transparent',
+                        pointBackgroundColor: '#007bff'
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        });
+    </script>
+</body>
+</html>
